@@ -1,6 +1,5 @@
 package guru.qa;
 
-import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -29,16 +28,44 @@ public class DemowebshopTests {
 
     @Test
     void addToWishListTest() {
-                given()
-                        .contentType("application/x-www-form-urlencoded; charset=UTF-8")
-                        .cookie("Nop.customer=ba78fc97-1802-4fed-a5d5-ba6860f8d4bb;")
-                        .body("addtocart_14.EnteredQuantity=1")
-                        .when()
-                        .post("http://demowebshop.tricentis.com/addproducttocart/details/14/2")
-                        .then()
-                        .log().all()
-                        .statusCode(200)
-                        .body("success", is(true))
-                        .body("updatetopwishlistsectionhtml", is("(1)"));
+        given()
+                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .cookie("Nop.customer=ba78fc97-1802-4fed-a5d5-ba6860f8d4bb;")
+                .body("addtocart_14.EnteredQuantity=1")
+                .when()
+                .post("http://demowebshop.tricentis.com/addproducttocart/details/14/2")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("success", is(true))
+                .body("updatetopwishlistsectionhtml", is("(1)"));
+    }
+
+    @Test
+    void subscribeTest() {
+        given()
+                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .cookie("Nop.customer=ba78fc97-1802-4fed-a5d5-ba6860f8d4bb;")
+                .body("email=fgdf@test.ur")
+                .when()
+                .post("http://demowebshop.tricentis.com/subscribenewsletter")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("Result", is("Thank you for signing up!" +
+                        " A verification email has been sent. We appreciate your interest."));
+    }
+
+    @Test
+    void voteTest() {
+        given()
+                .contentType("application/x-www-form-urlencoded; charset=UTF-8")
+                .body("pollAnswerId=2")
+                .when()
+                .post("http://demowebshop.tricentis.com/poll/vote")
+                .then()
+                .log().all()
+                .statusCode(200)
+                .body("error", is("Only registered users can vote."));
     }
 }
