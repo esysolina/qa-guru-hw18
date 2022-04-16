@@ -2,6 +2,7 @@ package guru.qa;
 
 import org.junit.jupiter.api.Test;
 
+import static guru.qa.listeners.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -10,6 +11,7 @@ public class DemowebshopTests {
     @Test
     void addToCartAsNewUserTest() {
         given()
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("product_attribute_72_5_18=53" +
                         "&product_attribute_72_6_19=54" +
@@ -29,6 +31,7 @@ public class DemowebshopTests {
     @Test
     void addToWishListTest() {
         given()
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .cookie("Nop.customer=ba78fc97-1802-4fed-a5d5-ba6860f8d4bb;")
                 .body("addtocart_14.EnteredQuantity=1")
@@ -44,6 +47,7 @@ public class DemowebshopTests {
     @Test
     void subscribeTest() {
         given()
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .cookie("Nop.customer=ba78fc97-1802-4fed-a5d5-ba6860f8d4bb;")
                 .body("email=fgdf@test.ur")
@@ -59,6 +63,7 @@ public class DemowebshopTests {
     @Test
     void voteTest() {
         given()
+                .filter(withCustomTemplates())
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .body("pollAnswerId=2")
                 .when()
